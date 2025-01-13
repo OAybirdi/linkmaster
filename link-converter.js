@@ -13,36 +13,39 @@ var shortener_url = "https://linkmaster.aybirdi.net/easy-short";
 function checkLinks() {
     if (typeof(domains) == "object") {
         DOMAssistant.$("body a").each(function () {
-            if (in_object(domains, DOMAssistant.$(this).href)) {
-                if (DOMAssistant.$(this).href.toLowerCase().indexOf("linkmaster.aybirdi.net") != 7) {
-                    url = shortener_url + "/" + accountID + "/" + encodeURIComponent(DOMAssistant.$(this).href);
+            var originalHref = DOMAssistant.$(this).href;
 
-                    // Son karakterin '/' olup olmadığını kontrol et ve kaldır
-                    var last = url.substring(url.length - 1);
-                    if (last == '/') {
-                        url = url.substring(0, url.length - 1);
+            if (in_object(domains, originalHref)) {
+                if (originalHref.toLowerCase().indexOf("linkmaster.aybirdi.net") != 7) {
+                    if (typeof accountID !== "undefined" && accountID !== null && accountID !== "") {
+                        // Tüm URL'leri düzgün encode et
+                        var encodedUrl = encodeURIComponent(originalHref);
+                        url = `${shortener_url}/${accountID}/${encodedUrl}`.replace(/([^:]\/)\/+/g, "$1"); // Çift "/" karakterlerini temizle
+
+                        console.log("Generated URL: ", url);
+                        DOMAssistant.$(this).setAttributes({ href: url });
+                    } else {
+                        console.error("accountID is not defined or empty.");
                     }
-
-                    console.log(url);
-                    DOMAssistant.$(this).setAttributes({ href: url });
                 }
             }
         });
 
     } else if (typeof(exclude_domains) == "object") {
         DOMAssistant.$("body a").each(function () {
-            if (!in_object(exclude_domains, DOMAssistant.$(this).href) && DOMAssistant.$(this).href.substr(0, 10) != "javascript") {
-                if (DOMAssistant.$(this).href.toLowerCase().indexOf("linkmaster.aybirdi.net") != 7) {
-                    url = shortener_url + "/" + accountID + "/" + encodeURIComponent(DOMAssistant.$(this).href);
+            var originalHref = DOMAssistant.$(this).href;
 
-                    // Son karakterin '/' olup olmadığını kontrol et ve kaldır
-                    var last = url.substring(url.length - 1);
-                    if (last == '/') {
-                        url = url.substring(0, url.length - 1);
+            if (!in_object(exclude_domains, originalHref) && originalHref.substr(0, 10) != "javascript") {
+                if (originalHref.toLowerCase().indexOf("linkmaster.aybirdi.net") != 7) {
+                    if (typeof accountID !== "undefined" && accountID !== null && accountID !== "") {
+                        var encodedUrl = encodeURIComponent(originalHref);
+                        url = `${shortener_url}/${accountID}/${encodedUrl}`.replace(/([^:]\/)\/+/g, "$1");
+
+                        console.log("Generated URL: ", url);
+                        DOMAssistant.$(this).setAttributes({ href: url });
+                    } else {
+                        console.error("accountID is not defined or empty.");
                     }
-
-                    console.log(url);
-                    DOMAssistant.$(this).setAttributes({ href: url });
                 }
             }
         });
@@ -60,4 +63,5 @@ function in_object(obj, val) {
 }
 
 DOMAssistant.DOMReady(checkLinks);
+
 
