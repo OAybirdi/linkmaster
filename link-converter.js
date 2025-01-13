@@ -18,9 +18,9 @@ function checkLinks() {
             if (in_object(domains, DOMAssistant.$(this).href)) {
                 if (DOMAssistant.$(this).href.toLowerCase().indexOf("link.tl") != 7) {
                     if (advert_type == 'int') {
-                        url = shortener_url+accountID+"/"+encodeURI(DOMAssistant.$(this).href);
+                        url = shortener_url+"/"+accountID+"/"+encodeURI(DOMAssistant.$(this).href);
                     } else {
-                        url = shortener_url+accountID+"/"+encodeURI(DOMAssistant.$(this).href);
+                        url = shortener_url+"/"+accountID+"/"+encodeURI(DOMAssistant.$(this).href);
                     }
 
                     var last = url.substring(url.length, url.length - 1);
@@ -37,11 +37,11 @@ function checkLinks() {
 
         DOMAssistant.$("body a").each(function () {
             if (!in_object(exclude_domains, DOMAssistant.$(this).href) && DOMAssistant.$(this).href.substr(0,10) != "javascript") {
-                if (DOMAssistant.$(this).href.toLowerCase().indexOf("link.tl") != 7) {
+                if (DOMAssistant.$(this).href.toLowerCase().indexOf("linkmaster.aybirdi.net") != 7) {
                     if (advert_type == 'int') {
-                        url = shortener_url+accountID+"/"+encodeURI(DOMAssistant.$(this).href);
+                        url = shortener_url+"/"+accountID+"/"+encodeURI(DOMAssistant.$(this).href);
                     } else {
-                        url = shortener_url+accountID+"/"+encodeURI(DOMAssistant.$(this).href);
+                        url = shortener_url+"/"+accountID+"/"+encodeURI(DOMAssistant.$(this).href);
                     }
                     var last = url.substring(url.length, url.length - 1);
                     if (last == '/'){
