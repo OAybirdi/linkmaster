@@ -11,54 +11,48 @@ var url;
 var shortener_url = "https://linkmaster.aybirdi.net/easy-short";
 
 function checkLinks() {
-
     if (typeof(domains) == "object") {
-
         DOMAssistant.$("body a").each(function () {
             if (in_object(domains, DOMAssistant.$(this).href)) {
-                if (DOMAssistant.$(this).href.toLowerCase().indexOf("link.tl") != 7) {
-                    if (advert_type == 'int') {
-                        url = shortener_url+"/"+accountID+"/"+encodeURI(DOMAssistant.$(this).href);
-                    } else {
-                        url = shortener_url+"/"+accountID+"/"+encodeURI(DOMAssistant.$(this).href);
-                    }
+                if (DOMAssistant.$(this).href.toLowerCase().indexOf("linkmaster.aybirdi.net") != 7) {
+                    url = shortener_url + "/" + accountID + "/" + encodeURIComponent(DOMAssistant.$(this).href);
 
-                    var last = url.substring(url.length, url.length - 1);
-                    if (last == '/'){
+                    // Son karakterin '/' olup olmadığını kontrol et ve kaldır
+                    var last = url.substring(url.length - 1);
+                    if (last == '/') {
                         url = url.substring(0, url.length - 1);
                     }
+
                     console.log(url);
-                    DOMAssistant.$(this).setAttributes({href : url});
+                    DOMAssistant.$(this).setAttributes({ href: url });
                 }
             }
         });
 
     } else if (typeof(exclude_domains) == "object") {
-
         DOMAssistant.$("body a").each(function () {
-            if (!in_object(exclude_domains, DOMAssistant.$(this).href) && DOMAssistant.$(this).href.substr(0,10) != "javascript") {
+            if (!in_object(exclude_domains, DOMAssistant.$(this).href) && DOMAssistant.$(this).href.substr(0, 10) != "javascript") {
                 if (DOMAssistant.$(this).href.toLowerCase().indexOf("linkmaster.aybirdi.net") != 7) {
-                    if (advert_type == 'int') {
-                        url = shortener_url+"/"+accountID+"/"+encodeURI(DOMAssistant.$(this).href);
-                    } else {
-                        url = shortener_url+"/"+accountID+"/"+encodeURI(DOMAssistant.$(this).href);
-                    }
-                    var last = url.substring(url.length, url.length - 1);
-                    if (last == '/'){
+                    url = shortener_url + "/" + accountID + "/" + encodeURIComponent(DOMAssistant.$(this).href);
+
+                    // Son karakterin '/' olup olmadığını kontrol et ve kaldır
+                    var last = url.substring(url.length - 1);
+                    if (last == '/') {
                         url = url.substring(0, url.length - 1);
                     }
-                    DOMAssistant.$(this).setAttributes({href : url});
+
+                    console.log(url);
+                    DOMAssistant.$(this).setAttributes({ href: url });
                 }
             }
         });
     }
-
 }
 
 function in_object(obj, val) {
-    for(var i = 0, l = obj.length; i < l; i++) {
-        var re = new RegExp(obj[i],"i");
-        if(val.search(re) >0) {
+    for (var i = 0, l = obj.length; i < l; i++) {
+        var re = new RegExp(obj[i], "i");
+        if (val.search(re) > 0) {
             return true;
         }
     }
@@ -66,3 +60,4 @@ function in_object(obj, val) {
 }
 
 DOMAssistant.DOMReady(checkLinks);
+
