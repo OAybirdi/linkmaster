@@ -8,7 +8,7 @@ if (advert_type != 'int' && advert_type != 'banner') {
 }
 
 var url;
-var shortener_url = "https://linkmaster.aybirdi.net/easy-short/";
+var shortener_url = "https://linkmaster.aybirdi.net/easy-short";
 
 function checkLinks() {
 
